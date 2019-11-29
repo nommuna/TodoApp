@@ -1,11 +1,12 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Grid, Paper, Divider, TextField } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import TodoItem from '../TodoItem/TodoItem';
+import { observer } from 'mobx-react-lite';
+import { NoteStoreContext } from '../../Stores/NoteStore';
 
-const TodoList: React.FC = () => {
-	const [userString, setUserString] = useState('');
-	const [userlist, setUserList] = useState([] as Array<string>);
+const TodoList: React.FC = observer(() => {
+	const noteStore = useContext(NoteStoreContext);
 	return (
 		<Fragment>
 			<Paper elevation={3}>
@@ -19,21 +20,21 @@ const TodoList: React.FC = () => {
 						<TextField
 							id="standard-basic"
 							label="Add Item"
-							onChange={e => setUserString(e.target.value)}
+							onChange={e =>
+								noteStore.setUserString(e.target.value)
+							}
 						/>
 					</Grid>
 					<Grid item md={1}>
 						<AddIcon
-							onClick={() =>
-								setUserList([...userlist, userString])
-							}
+							onClick={() => noteStore.updateList()}
 							fontSize="large"
 						/>
 					</Grid>
 				</Grid>
 				<Divider />
 				<Grid container direction="column" justify="center">
-					{userlist.map((result, i) => (
+					{noteStore.getList().map((result, i) => (
 						<Grid key={i} item md={12}>
 							<TodoItem item={result} />
 						</Grid>
@@ -42,6 +43,6 @@ const TodoList: React.FC = () => {
 			</Paper>
 		</Fragment>
 	);
-};
+});
 
 export default TodoList;
