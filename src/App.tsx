@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import { Typography, Grid } from '@material-ui/core';
 import TodoList from './components/TodoList/TodoList';
 
