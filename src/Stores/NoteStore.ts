@@ -10,10 +10,15 @@ class NoteStore {
     }
 
     @action updateList() {
-        this.userList.push(this.userString);
+        if(this.userString === '' && this.userList.length >= 0){
+            return;
+        } else {
+            this.userList.push(this.userString);
+        }
     }
 
     @action getList(): Array<string> {
+        this.userString = '';
         return this.userList;
     }
 

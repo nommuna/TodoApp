@@ -26,7 +26,7 @@ const TodoList: React.FC = observer(() => {
 					<Grid item md={10}>
 						<StyledTextField
 							id="standard-basic"
-							label="Add Item"
+							label="Add todo"
 							fullWidth
 							onChange={e =>
 								noteStore.setUserString(e.target.value)
