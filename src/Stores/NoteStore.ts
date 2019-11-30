@@ -13,8 +13,12 @@ class NoteStore {
         this.userList.push(this.userString);
     }
 
-    @action getList(): Array<string>{
+    @action getList(): Array<string> {
         return this.userList;
+    }
+
+    @action removeItem(index: number) {
+        this.userList.splice(index,1);
     }
 }
 

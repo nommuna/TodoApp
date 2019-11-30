@@ -1,46 +1,61 @@
 import React, { Fragment, useContext } from 'react';
-import { Grid, Paper, Divider, TextField } from '@material-ui/core';
+import { Grid, Paper, Divider, TextField, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import TodoItem from '../TodoItem/TodoItem';
 import { observer } from 'mobx-react-lite';
 import { NoteStoreContext } from '../../Stores/NoteStore';
+import styled from 'styled-components';
 
 const TodoList: React.FC = observer(() => {
 	const noteStore = useContext(NoteStoreContext);
+	const StyledPaper = styled(Paper)`
+		padding-bottom: 10px;
+	`;
+	const StyledTextField = styled(TextField)`
+		padding-bottom: 15px;
+	`;
 	return (
 		<Fragment>
-			<Paper elevation={3}>
+			<StyledPaper elevation={3}>
 				<Grid
 					container
 					spacing={1}
 					justify="center"
 					alignItems="center"
 				>
-					<Grid item md={11}>
-						<TextField
+					<Grid item md={10}>
+						<StyledTextField
 							id="standard-basic"
 							label="Add Item"
+							fullWidth
 							onChange={e =>
 								noteStore.setUserString(e.target.value)
+							}
+							onKeyDown={e =>
+								e.key === 'Enter' && noteStore.updateList()
 							}
 						/>
 					</Grid>
 					<Grid item md={1}>
-						<AddIcon
+						<IconButton
+							aria-label="add"
 							onClick={() => noteStore.updateList()}
-							fontSize="large"
-						/>
+						>
+							<AddIcon fontSize="large" />
+						</IconButton>
 					</Grid>
 				</Grid>
 				<Divider />
-				<Grid container direction="column" justify="center">
+				<Grid container justify="center">
 					{noteStore.getList().map((result, i) => (
-						<Grid key={i} item md={12}>
-							<TodoItem item={result} />
-						</Grid>
+						<Fragment key={i}>
+							<Grid item md={11}>
+								<TodoItem item={result} position={i} />
+							</Grid>
+						</Fragment>
 					))}
 				</Grid>
-			</Paper>
+			</StyledPaper>
 		</Fragment>
 	);
 });
