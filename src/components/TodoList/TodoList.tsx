@@ -10,6 +10,8 @@ const TodoList: React.FC = observer(() => {
 	const noteStore = useContext(NoteStoreContext);
 	const StyledPaper = styled(Paper)`
 		padding-bottom: 10px;
+		overflow-y: auto;
+		max-height: 500px;
 	`;
 	const StyledTextField = styled(TextField)`
 		padding-bottom: 15px;
@@ -47,7 +49,7 @@ const TodoList: React.FC = observer(() => {
 				</Grid>
 				<Divider />
 				<Grid container justify="center">
-					{noteStore.getList().map((result, i) => (
+					{noteStore.getList.map((result, i) => (
 						<Fragment key={i}>
 							<Grid item md={11}>
 								<TodoItem item={result} position={i} />

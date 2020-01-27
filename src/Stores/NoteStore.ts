@@ -17,11 +17,11 @@ class NoteStore {
 			return;
 		} else {
 			this.userList.push(this.userString);
+			this.userString = '';
 		}
 	}
 
-	@action getList(): Array<string> {
-		this.userString = '';
+	@computed get getList(): Array<string> {
 		return this.userList;
 	}
 
